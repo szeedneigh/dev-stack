@@ -110,5 +110,5 @@ Contributions are welcome! Please follow these steps:
 
 Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
-Built with ❤️ by [Your Name]  
+Built with ❤️ by Sidney John Sarcia  
 [Report Bug](#) · [Request Feature](#)
