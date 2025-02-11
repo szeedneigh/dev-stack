@@ -1,33 +1,33 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "@/app/styles/globals.css"
+"use client "
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import dynamic from "next/dynamic";
+import "@/app/styles/globals.css";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const DynamicThemeProvider = dynamic(
+  () => import("@/components/theme-provider").then((mod) => mod.default),
+  { ssr: false }
+);
 
-export const metadata: Metadata = {
-  title: "DevStack",
-  description: "Powered by Wise Mind Solutions",
-};
+const DynamicToaster = dynamic(
+  () => import("@/components/ui/toaster").then((mod) => mod.default),
+  { ssr: false }
+);
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang="en" suppressHydrationWarning={true}>
+      <body suppressHydrationWarning={true}>
+        <DynamicThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="min-h-screen bg-background">
+            <main className="container py-6">{children}</main>
+          </div>
+          <DynamicToaster />
+        </DynamicThemeProvider>
       </body>
     </html>
   );
